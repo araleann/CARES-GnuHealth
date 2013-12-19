@@ -23,11 +23,7 @@
 <!-- Health service -->
 <!-- <label name="desc"/>
      <field name="desc"/>
-     AFTER NG service_date
-     
-	<field name="desc" expand="1"/>
-	AFTER NG patient expand="1"
--->
+     AFTER NG service_date-->
 
         <record model="ir.ui.view" id="gnuhealth_health_service_view">
             <field name="model">gnuhealth.health_service</field>
@@ -66,6 +62,7 @@
                     <field name="service_date" expand="1"/>
                     <field name="name" expand="1"/>
                     <field name="patient" expand="1"/>
+                    <field name="desc" expand="1"/>
                     <field name="state" expand="1"/>
                 </tree>
                 ]]>

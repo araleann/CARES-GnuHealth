@@ -61,19 +61,18 @@ class Invoice(Workflow, ModelSQL, ModelView):
             }, depends=['state', 'lines'])
     type_name = fields.Function(fields.Char('Type'), 'get_type_name')
     number = fields.Char('Number', size=None, readonly=True, select=True)
-
-    reference = fields.Char('Transaction Number', size=None, states=_STATES,
+    reference = fields.Char('Reference', size=None, states=_STATES,
         depends=_DEPENDS)
     description = fields.Char('Description', size=None, states=_STATES,
         depends=_DEPENDS)
     state = fields.Selection([
-        ('draft', 'Unpaid'),
-        ('validated', 'Unpaid'),
-        ('posted', 'Unpaid'),
+        ('draft', 'Draft'),
+        ('validated', 'Validated'),
+        ('posted', 'Posted'),
         ('paid', 'Paid'),
         ('cancel', 'Canceled'),
         ], 'State', readonly=True)
-    invoice_date = fields.Date('Date',
+    invoice_date = fields.Date('Invoice Date',
         states={
             'readonly': Eval('state').in_(['posted', 'paid', 'cancel']),
             'required': Eval('state').in_(
@@ -84,7 +83,7 @@ class Invoice(Workflow, ModelSQL, ModelView):
         depends=['state'])
     accounting_date = fields.Date('Accounting Date', states=_STATES,
         depends=_DEPENDS)
-    party = fields.Many2One('party.party', 'Patient',
+    party = fields.Many2One('party.party', 'Party',
         required=True, states=_STATES, depends=_DEPENDS,
         on_change=['party', 'payment_term', 'type', 'company'])
     party_lang = fields.Function(fields.Char('Party Language',
@@ -118,7 +117,7 @@ class Invoice(Workflow, ModelSQL, ModelView):
             ])
     payment_term = fields.Many2One('account.invoice.payment_term',
         'Payment Term', required=True, states=_STATES, depends=_DEPENDS)
-    lines = fields.One2Many('account.invoice.line', 'invoice', 'Particulars',
+    lines = fields.One2Many('account.invoice.line', 'invoice', 'Lines',
         states=_STATES, on_change=[
             'lines', 'taxes', 'currency', 'party', 'type'
         ], depends=['state', 'currency_date'])
@@ -126,7 +125,7 @@ class Invoice(Workflow, ModelSQL, ModelView):
         states=_STATES, depends=_DEPENDS,
         on_change=['lines', 'taxes', 'currency', 'party', 'type'])
     comment = fields.Text('Comment', states=_STATES, depends=_DEPENDS)
-    untaxed_amount = fields.Function(fields.Numeric('Subtotal',
+    untaxed_amount = fields.Function(fields.Numeric('Untaxed',
             digits=(16, Eval('currency_digits', 2)),
             depends=['currency_digits']),
         'get_untaxed_amount', searcher='search_untaxed_amount')
@@ -136,7 +135,7 @@ class Invoice(Workflow, ModelSQL, ModelView):
     total_amount = fields.Function(fields.Numeric('Total', digits=(16,
                 Eval('currency_digits', 2)), depends=['currency_digits']),
         'get_total_amount', searcher='search_total_amount')
-    reconciled = fields.Function(fields.Boolean('Paid'),
+    reconciled = fields.Function(fields.Boolean('Reconciled'),
             'get_reconciled')
     lines_to_pay = fields.Function(fields.One2Many('account.move.line', None,
         'Lines to Pay'), 'get_lines_to_pay')
@@ -1453,7 +1452,7 @@ class InvoiceLine(ModelSQL, ModelView):
         depends=['product', 'type', 'product_uom_category'])
     unit_digits = fields.Function(fields.Integer('Unit Digits',
         on_change_with=['unit']), 'on_change_with_unit_digits')
-    product = fields.Many2One('product.product', 'Item',
+    product = fields.Many2One('product.product', 'Product',
         states={
             'invisible': Eval('type') != 'line',
             },
@@ -1502,7 +1501,7 @@ class InvoiceLine(ModelSQL, ModelView):
             on_change_with=['type', 'quantity', 'unit_price',
                 '_parent_invoice.currency', 'currency'],
             depends=['type', 'currency_digits']), 'get_amount')
-    description = fields.Text('Service', size=None, required=True)
+    description = fields.Text('Description', size=None, required=True)
     note = fields.Text('Note')
     taxes = fields.Many2Many('account.invoice.line-account.tax',
         'line', 'tax', 'Taxes',

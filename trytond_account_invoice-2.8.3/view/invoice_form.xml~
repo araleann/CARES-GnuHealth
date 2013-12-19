@@ -57,7 +57,7 @@ this repository contains the full copyright notices and license terms. -->
                             string="Validate"
                             help="Also known as Pro Forma"
                             icon="tryton-go-next"/-->
-                        <button name="post" string="_Save"
+                        <button name="post" string="_Pay"
                             icon="tryton-ok"/>
                         <button name="pay" string="_Pay"
                             icon="tryton-go-next"/>

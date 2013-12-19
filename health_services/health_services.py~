@@ -42,7 +42,7 @@ class HealthService(ModelSQL, ModelView):
     __name__ = 'gnuhealth.health_service'
 
     name = fields.Char('Transaction Number', readonly=True)
-    desc = fields.Char('Description')
+    desc = fields.Char('Description', required=True)
     patient = fields.Many2One('gnuhealth.patient', 'Patient', required=True)
     service_date = fields.Date('Date')
     service_line = fields.One2Many('gnuhealth.health_service.line',
@@ -108,5 +108,4 @@ class HealthServiceLine(ModelSQL, ModelView):
     @staticmethod
     def default_to_invoice():
         return True
-
 

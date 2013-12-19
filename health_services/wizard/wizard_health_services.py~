@@ -70,8 +70,8 @@ class CreateServiceInvoice(Wizard):
             invoice_data = {}
             invoice_data['description'] = service.desc
             invoice_data['party'] = service.patient.name.id
-            invoice_data['account'] = \
-	    	service.patient.name.account_receivable.id
+            #invoice_data['account'] = \
+	    #	service.patient.name.account_receivable.id
             party_address = Party.address_get(service.patient.name,
                 type='invoice')
             if not party_address:

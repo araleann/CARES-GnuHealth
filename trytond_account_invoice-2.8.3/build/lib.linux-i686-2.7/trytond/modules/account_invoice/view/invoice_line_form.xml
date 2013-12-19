@@ -6,14 +6,14 @@ this repository contains the full copyright notices and license terms. -->
     <field name="invoice" colspan="3"/>
     <notebook colspan="4">
         <page string="General" id="general">
-            <!--label name="type"/>
+            <label name="type"/>
             <field name="type"/>
             <label name="sequence"/>
-            <field name="sequence"/-->
+            <field name="sequence"/>
             <label name="product"/>
             <field name="product"/>
-            <!--label name="account"/>
-            <field name="account"/-->
+            <label name="account"/>
+            <field name="account"/>
             <newline/>
             <label name="description"/>
             <field name="description" colspan="3"
@@ -26,13 +26,13 @@ this repository contains the full copyright notices and license terms. -->
             <field name="unit_price"/>
             <label name="amount"/>
             <field name="amount"/>
-            <!--field name="taxes" colspan="4"/-->
+            <field name="taxes" colspan="4"/>
         </page>
-        <!--page string="Notes" id="notes">
+        <page string="Notes" id="notes">
             <separator name="note" colspan="4"/>
             <field name="note" colspan="4"
                 spell="If(Bool(Eval('_parent_invoice')), Get(Eval('_parent_invoice', {}), 'party_lang'), Eval('party_lang'))"/>
-        </page-->
+        </page>
     </notebook>
     <field name="party_lang" invisible="1" colspan="4"/>
 </form>

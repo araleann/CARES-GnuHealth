@@ -26,7 +26,7 @@ _STATES = {
 _DEPENDS = ['state']
 
 _TYPE = [
-    ('out_invoice', 'Invoice'),
+    ('out_invoice', 'Invhoice'),
     ('in_invoice', 'Supplier Invoice'),
     ('out_credit_note', 'Credit Note'),
     ('in_credit_note', 'Supplier Credit Note'),

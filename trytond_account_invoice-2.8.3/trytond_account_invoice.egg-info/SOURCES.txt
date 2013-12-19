@@ -10,6 +10,7 @@ invoice.odt
 invoice.xml
 party.xml
 payment_term.xml
+setup.cfg
 setup.py
 tryton.cfg
 ./__init__.py

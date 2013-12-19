@@ -16,7 +16,7 @@ this repository contains the full copyright notices and license terms. -->
             <field name="account"/-->
             <newline/>
             <label name="description"/>
-            <field name="description" colspan="3"
+            <field name="description" colspan="1"
                 spell="If(Bool(Eval('_parent_invoice')), Get(Eval('_parent_invoice', {}), 'party_lang'), Eval('party_lang'))"/>
             <label name="quantity"/>
             <field name="quantity"/>
